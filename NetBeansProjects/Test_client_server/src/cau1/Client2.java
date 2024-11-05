@@ -18,35 +18,32 @@ import java.util.ArrayList;
  */
 public class Client2 {
     public static void main(String[] args)throws IOException {
-        Socket sc = new Socket("localhost",5555); // Thay local host = ip 
-        
+        Socket sc = new Socket("localhost",5555);
         BufferedReader br = new BufferedReader(new InputStreamReader(sc.getInputStream()));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
         
-        // gui chuoi ma sv
-        String code = "B21;hKy3HKYZ";
+        // gui 1 chuoi gom "tdcode;qcode"
+        String code = "studentCode;qcode";
         bw.write(code);
-        bw.newLine(); // ghi dòng mới để biết dữ liệu đã kết thúc (đọc dl theo dòng)
-        bw.flush(); // đảm bảo dữ liệu dc gửi luôn 
-        // nhan ds tu server
-        String s = br.readLine();
-        System.out.println(s);
-        
-        String [] a = s.split(", ");
-        
-        ArrayList<String> res = new ArrayList<>();
-        String q = "";
-        for (String x:a){
-            if(x.endsWith(".edu")) q+=x+',';
-        }
-        q = q.substring(0,q.length()-1);
-        bw.write(q);
-        System.out.println(q);
         bw.newLine();
         bw.flush();
-        br.close();
+        
+        // nhan 1 chuoi gom list cac string
+        String s = br.readLine();
+        System.out.println("s");
+        String res = "";
+        for (String word: s.split(", ")) {
+            if (word.endsWith(".edu")) res += word+',';
+        }
+            
+        res = res.substring(0,res.length()-1);
+        bw.write(res);
+        System.out.println(res);
+        bw.flush();
         bw.close();
+        br.close();
         sc.close();
+        
       
     }
 }
