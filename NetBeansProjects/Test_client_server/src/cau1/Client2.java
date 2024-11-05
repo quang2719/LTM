@@ -18,23 +18,28 @@ import java.util.ArrayList;
  */
 public class Client2 {
     public static void main(String[] args)throws IOException {
-        Socket sc = new Socket("localhost",5555);
+        Socket sc = new Socket("localhost",5555); // Thay local host = ip 
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(sc.getInputStream()));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
+        
+        // gui chuoi ma sv
         String code = "B21;hKy3HKYZ";
         bw.write(code);
-        bw.newLine();
-        bw.flush();
-        String s= br.readLine();
+        bw.newLine(); // ghi dòng mới để biết dữ liệu đã kết thúc (đọc dl theo dòng)
+        bw.flush(); // đảm bảo dữ liệu dc gửi luôn 
+        // nhan ds tu server
+        String s = br.readLine();
         System.out.println(s);
-        String []a =s.trim().split("\\,");
-        ArrayList<String>res = new ArrayList<>();
+        
+        String [] a = s.split(", ");
+        
+        ArrayList<String> res = new ArrayList<>();
         String q = "";
         for (String x:a){
-            if(x.endsWith(".edu")) res.add(x);
+            if(x.endsWith(".edu")) q+=x+',';
         }
-        for(int i = 0; i<res.size()-1;i++) q+=res.get(i) +",";
-        q+= res.get(res.size()-1);
+        q = q.substring(0,q.length()-1);
         bw.write(q);
         System.out.println(q);
         bw.newLine();
