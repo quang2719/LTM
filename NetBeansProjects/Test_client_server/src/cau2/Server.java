@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package test_client_server;
+package cau2;
 
 /**
  *
  * @author Admin
  */
-public class Test_client_server {
+public class Server {
 
     /**
      * @param args the command line arguments
