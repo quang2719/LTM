@@ -44,7 +44,7 @@ public class Server {
     }
 
     private static String generateRandomString() {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String chars = "ABCDEFGHIJKLMNO PQRSTUVWX YZabcdefghij klmnopqr stuvwxyz0123 456789";
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 20; i++) {
