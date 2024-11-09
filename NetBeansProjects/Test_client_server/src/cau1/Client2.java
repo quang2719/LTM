@@ -11,39 +11,43 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class Client2 {
     public static void main(String[] args)throws IOException {
         Socket sc = new Socket("localhost",5555);
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(sc.getInputStream()));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
         
-        // gui 1 chuoi gom "tdcode;qcode"
-        String code = "studentCode;qcode";
+        String code = "B21DCCN632;m81LDpdo";
         bw.write(code);
         bw.newLine();
         bw.flush();
         
-        // nhan 1 chuoi gom list cac string
-        String s = br.readLine();
-        System.out.println("s");
-        String res = "";
-        for (String word: s.split(", ")) {
-            if (word.endsWith(".edu")) res += word+',';
+        String input = br.readLine();
+        List<String> email = new ArrayList<>();
+        String[] sentences = input.split(", ");
+        for (String sentence : sentences){
+            if (sentence.endsWith(".edu")){
+                email.add(sentence);
+            }
         }
-            
-        res = res.substring(0,res.length()-1);
+        String res = "";
+        for(String e:email){
+            res += e +", ";
+        }
+        res = res.substring(0,res.length()-2);
         bw.write(res);
-        System.out.println(res);
+        bw.newLine();
         bw.flush();
+        
         bw.close();
         br.close();
         sc.close();
-        
-      
     }
 }
+
+//
+//Ví dụ: giHgWHwkLf0Rd0.io, I7jpjuRw13D.io, wXf6GP3KP.vn, MdpIzhxDVtTFTF.edu, TUHuMfn25chmw.vn, HHjE9.com, 4hJld2m2yiweto.vn, y2L4SQwH.vn, s2aUrZGdzS.com, 4hXfJe9giAA.edu
+//c.	Tìm kiếm các tên miền .edu và gửi lên server
