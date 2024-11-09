@@ -1,50 +1,53 @@
 package cau2;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
 
 
 public class Client2 {
     public static void main(String[] args) throws IOException {
         Socket sc = new Socket("localhost",5555);
+        DataInputStream d_in = new DataInputStream(sc.getInputStream());
+        DataOutputStream d_out = new DataOutputStream(sc.getOutputStream());
         
-        DataInputStream br = new DataInputStream(sc.getInputStream());
-        DataOutputStream bw = new DataOutputStream(sc.getOutputStream());
+        String code = "D21DCCN632,qCode";
+        d_out.writeUTF(code);
+        d_out.flush();
+        System.out.println("Send code to server:"+code);
         
-        String code = "B21;asd";
-        bw.writeUTF(code);
-        bw.flush();
+        String input = d_in.readUTF();
+        String[] nums = input.split(",");
+        System.out.println("Received Input: "+input);
         
-        String input = br.readUTF();
-        System.out.println("receive: "+ input);
-        List<Integer> chan = new ArrayList<>();
-        List<Integer> le = new ArrayList<>();
+        List<Integer> even = new ArrayList<>();
+        List<Integer> odd = new ArrayList<>();
         
-        for (String word : input.split(",")){
-            int i = Integer.parseInt(word.trim());
-            if (i%2==0) chan.add(i);
-            else le.add(i);
+        for (String num :nums){
+            int n = Integer.parseInt(num);
+            if (n%2==0){
+                even.add(n);
+            }else{
+                odd.add(n);
+            }
         }
-        Collections.sort(chan);
-        Collections.sort(le);
         
-        String formattedResult = chan.toString() + ";" + le.toString();
-        System.out.println("Sent tAo server: "+ formattedResult);
-        bw.writeUTF(formattedResult);
-        bw.flush();
-        bw.close();
-        br.close();
+        Collections.sort(odd);
+        Collections.sort(even);
+        
+        String res = even.toString() +";"+odd.toString();
+        d_out.writeUTF(res);
+        d_out.flush();
+        
+        System.out.println("Send response to server "+ res);
+        
+        d_in.close();
+        d_out.close();
         sc.close();
         
     }
