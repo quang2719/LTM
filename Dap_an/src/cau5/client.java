@@ -9,7 +9,7 @@ public class client {
         try {
             // Create UDP socket
             DatagramSocket clientSocket = new DatagramSocket();
-            InetAddress serverAddress = InetAddress.getByName("localhost");
+            InetAddress serverAddress = InetAddress.getByName("203.162.10.109");
             
             // Prepare initial message
             String studentCode = "B21DCCN632"; // Replace with your student code
