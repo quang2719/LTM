@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
-import cau13.RMI.ByteService;
+import RMI.ByteService;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -44,6 +44,9 @@ public class Cau13 {
             System.out.println("Hex data submitted successfully.");
 
         } catch (RemoteException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+            e.printStackTrace();  // In ra chi tiết stack trace
+
         }
     }
 }
