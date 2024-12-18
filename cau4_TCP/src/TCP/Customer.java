@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package cau04.TCP;
+
+package TCP;
+
+import java.io.Serializable;
 /**
  *
  * @author Admin
  */
-public class Customer918 {
-    private static final long serialVersionUID = 918;
+public class Customer {
+    private static final long serialVersionUID = 20170711L;
     private int id;
     private String code;
     private String name;
     private String dayOfBirth;
     private String userName;
 
-    public Customer918(int id, String code, String name, String dayOfBirth, String userName) {
+    public Customer(int id, String code, String name, String dayOfBirth, String userName) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -43,9 +42,6 @@ public class Customer918 {
         this.userName = userName;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public int getId() {
         return id;

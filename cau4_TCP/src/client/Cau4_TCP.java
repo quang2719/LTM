@@ -1,4 +1,4 @@
-package cau04;
+package client;
 
 
 
@@ -14,7 +14,7 @@ import TCP.Customer;
  *
  * @author Admin
  */
-public class Cau04 {
+public class Cau4_TCP {
 
     /**
      * @param args the command line arguments
@@ -35,9 +35,11 @@ public class Cau04 {
             
             // Step 1: Send student code and question code
             out.writeObject(studentCode + ";" + qCode);
+            System.out.println("Give object" + studentCode + ";" + qCode);
 
             // Step 2: Receive Customer918 object
             Customer customer = (Customer) in.readObject();
+            System.out.println("Get object customer: "+customer.toString());
 
             // Step 3: Format the data
             String formattedName = formatName(customer.getName());
@@ -51,6 +53,7 @@ public class Cau04 {
 
             // Step 4: Send modified object back to server
             out.writeObject(customer);
+            System.out.println("Write object " + customer.toString());
 
         } catch (IOException | ClassNotFoundException  e) {
             e.printStackTrace();
@@ -70,8 +73,7 @@ public class Cau04 {
         StringBuilder sb = new StringBuilder();
         sb.append(words[words.length-1].toUpperCase() +",");
         for (int i = 0;i< words.length-1;i++){
-            sb.append(" "+words[i].toUpperCase().charAt(0))
-                    .append(words[i].toLowerCase().substring(1));
+            sb.append(" "+words[i]);
         }
         return sb.toString();
     }
