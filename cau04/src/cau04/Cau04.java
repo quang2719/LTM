@@ -37,7 +37,7 @@ public class Cau04 {
             out.writeObject(studentCode + ";" + qCode);
 
             // Step 2: Receive Customer918 object
-            Customer customer = (Customer) in.readObject();
+            Customer customer = (Customer) in.readObject(); 
 
             // Step 3: Format the data
             String formattedName = formatName(customer.getName());

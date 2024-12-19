@@ -21,52 +21,45 @@ import java.net.UnknownHostException;
 //c.	Thực hiện loại bỏ ký tự đặc biệt, số, ký tự trùng và giữ nguyên thứ tự xuất hiện của chúng. Gửi thông điệp lên server theo định dạng "requestId;strOutput", trong đó strOutput là chuỗi đã được xử lý ở trên
 //d.	Đóng socket và kết thúc chương trình.
 
-public class Client {
-    public static void main(String[] args) throws SocketException, UnknownHostException, IOException {
-        try{
-            DatagramSocket client = new DatagramSocket();
-            InetAddress server = InetAddress.getByName("203.162.10.109");
-            int port = 2208;
-            String mes1 = ";B21DCCN632;piSQf5ct";
-
-            //send
-            byte[] mes_data = mes1.getBytes();
-            DatagramPacket mes_packet = new DatagramPacket(mes_data, mes_data.length,server,port);
-            client.send(mes_packet);
-            System.out.println("gui qcode thanh cong");
-
-            //receive
-            byte[] rec_data = new byte[1024];
-            DatagramPacket rec_packet = new DatagramPacket(rec_data, rec_data.length,server,port);
-            client.receive(rec_packet);
-            String rec_mes = new String(rec_packet.getData(),0,rec_packet.getLength());
-            System.out.println("nhan thanh cong: "+rec_mes);
-
-            // handle string
-            String[] messages = rec_mes.split(";");
-            String req = messages[0];
-            String input = messages[1];
-
-            StringBuilder sb = new StringBuilder();
-            for(char c: input.toCharArray()){
-                if(Character.isAlphabetic(c)){
-                    if(sb.indexOf(Character.toString(c)) == -1){
-                        sb.append(Character.toString(c));
-                    }
+public class Client{
+    public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
+        int port = 2208;
+        String address = "203.162.10.109";
+        String code = ";B21DCCN632;piSQf5ct";
+        
+        DatagramSocket client = new DatagramSocket();
+        InetAddress sever = InetAddress.getByName(address);
+        
+        byte[] data = code.getBytes();
+        DatagramPacket dataPacket = new DatagramPacket(data,data.length,sever, port);
+        client.send(dataPacket);
+        
+        // nhan code
+        
+        byte[] data_raw = new byte[1024];
+        DatagramPacket data_raw_package = new DatagramPacket(data_raw,data_raw.length, sever,port);
+        client.receive(data_raw_package);
+        
+        // xuly code
+        String s = new String(data_raw_package.getData(),0,data_raw_package.getLength());
+        String[] words = s.split(";");
+        String id = words[0];
+        String input = words[1];
+        
+        StringBuilder sb = new StringBuilder();
+        for(char c: input.toCharArray()){
+            if(Character.isAlphabetic(c)){
+                if (sb.indexOf(Character.toString(c))==-1){
+                    sb.append(Character.toString(c));
                 }
             }
-            String res = req +";" + sb.toString();
-
-            // send again
-            byte[] res_data = res.getBytes();
-            DatagramPacket res_packet = new DatagramPacket(res_data, res_data.length,server,port);
-            client.send(res_packet);
-
-            System.out.println("gui thanh cong: "+res);
-            client.close();
-
-        }catch (Exception e){
-            e.printStackTrace();
         }
+        String res = id +";"+sb.toString();
+        
+        byte[] res_data = res.getBytes();
+        DatagramPacket res_pack = new DatagramPacket(res_data,res_data.length,sever, port);
+        client.send(res_pack);
+        client.close();
     }
 }
+
